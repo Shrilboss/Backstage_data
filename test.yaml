@@ -5,7 +5,7 @@ metadata:
   description: AD-API test
 spec:
   type: openapi
-  owner: guests
   lifecycle: production
+  owner: guests
   definition:
-    $yaml: https://github.com/Shrilboss/Backstage_data/blob/main/ad_api.yaml
+    $text: https://github.com/Shrilboss/Backstage_data/blob/main/ad_api.yaml
