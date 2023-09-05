@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: AD-API
+  description: AD-API test
+spec:
+  type: openapi
+  owner: guests
+  lifecycle: production
+  definition:
+    $yaml: https://github.com/Shrilboss/Backstage_data/blob/main/ad_api.yaml
