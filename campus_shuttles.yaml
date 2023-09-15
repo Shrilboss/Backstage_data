@@ -1,0 +1,43 @@
+swagger: "2.0"
+paths:
+  "/stops/{id}/arrivals":
+    get:
+      responses:
+        "200":
+          description: ""
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /stops:
+    get:
+      responses:
+        "200":
+          description: ""
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/stops/{id}/siblings":
+    get:
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: ""
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /stops/all:
+    get:
+      responses:
+        "200":
+          description: ""
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+info:
+  title: CampusShuttles
+  version: v1.0.0

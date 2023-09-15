@@ -1,0 +1,88 @@
+paths:
+  /noauth:
+    get:
+      x-auth-type: None
+      x-throttling-tier: Unlimited
+      responses:
+        "200":
+          description: ""
+    post:
+      responses:
+        "200":
+          description: ""
+      parameters:
+        - name: Payload
+          description: Request Body
+          required: false
+          in: body
+          schema:
+            type: object
+            properties:
+              payload:
+                type: string
+      x-auth-type: None
+      x-throttling-tier: Unlimited
+  "/*":
+    post:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      x-scope: echo_post
+      parameters:
+        - schema:
+            properties:
+              payload:
+                type: string
+            type: object
+          description: Request Body
+          name: Payload
+          required: false
+          in: body
+      responses:
+        "200":
+          description: ""
+    put:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      x-scope: demo
+      parameters:
+        - schema:
+            properties:
+              payload:
+                type: string
+            type: object
+          description: Request Body
+          name: Payload
+          required: false
+          in: body
+      responses:
+        "200":
+          description: ""
+    get:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      responses:
+        "200":
+          description: ""
+    head:
+      x-auth-type: None
+      x-throttling-tier: Unlimited
+      x-scope: ""
+      responses:
+        "200":
+          description: ""
+x-wso2-security:
+  apim:
+    x-wso2-scopes:
+      - description: ""
+        roles: Internal/everyone
+        name: demo
+        key: demo
+      - description: ""
+        name: post
+        roles: Internal/everyone
+        key: echo_post
+swagger: "2.0"
+info:
+  title: Echo
+  description: "A Simple web service that returns everything sent to it; useful for testing.  To post you need to request the scope \"echo_post\" when getting an access token.  All users have permission for this scope.\n\nThis service also can return the JWT that it was presented with (see https://collab.ucsd.edu/display/API/Accessing+Authentication+Details+Via+JWT).\n\nQA URL\thttps://api-qa.ucsd.edu:8243/_echo\nDev URL\thttps://api-qa.ucsd.edu:8243/_echo"
+  version: 1.0.0

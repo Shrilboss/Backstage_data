@@ -1,0 +1,283 @@
+paths:
+  /mergePDF:
+    get:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      description: A service that fetches two PDFs and returns a merged version.
+      produces:
+        - application/pdf
+      parameters:
+        - description: Where the first PDF should be retrieved from.
+          name: pdf1uri
+          required: true
+          type: string
+          in: query
+        - description: Where the second PDF should be retrieved from.
+          name: pdf2uri
+          required: true
+          type: string
+          in: query
+      responses:
+        "200":
+          description: ""
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+  /verification:
+    get:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      produces:
+        - application/pdf
+      parameters:
+        - $ref: "#/parameters/studentID"
+        - $ref: "#/parameters/documentId"
+        - description: "The graduation term to verify.  e.g. spring, summer, fall, winter"
+          name: expgrad
+          type: string
+          required: false
+          in: query
+        - default: false
+          description: "Should data about the student's enrollment by term be included. Needs to have atleast one section"
+          name: enroll
+          type: boolean
+          required: false
+          in: query
+        - default: false
+          description: "Should data about student's payment history be included."
+          name: regfees
+          required: false
+          type: boolean
+          in: query
+        - default: false
+          description: Should the number of units the student passed by term be included.
+          name: units
+          required: false
+          type: boolean
+          in: query
+        - default: false
+          description: "Should the student's GPA per term be included."
+          name: gpa
+          required: false
+          type: boolean
+          in: query
+        - default: false
+          description: Should a list of degrees awarded to the student be included.
+          name: degrees
+          required: false
+          type: boolean
+          in: query
+        - description: Start of term to be included in verification
+          name: fromTerm
+          type: string
+          required: false
+          in: query
+        - description: Start year to be included in verification
+          name: fromyear
+          required: false
+          type: string
+          in: query
+        - description: End of term to be included in verification
+          name: toTerm
+          required: false
+          type: string
+          in: query
+        - description: End of year to be included in verification
+          name: toyear
+          required: false
+          type: string
+          in: query
+        - description: Expected graduation 4 letter year
+          name: gradyear
+          type: string
+          required: false
+          in: query
+        - description: Academic level(s) for verification request
+          name: academicLevel
+          type: string
+          required: true
+          in: query
+        - description: Name of the product being reqested
+          name: documentName
+          required: true
+          type: string
+          in: query
+        - description: Enum - Electronic/Mail/HoldForPickup
+          name: deliveryMethod
+          type: string
+          required: true
+          in: query
+        - description: Should all qtrs of student attendance be included
+          name: allqtr
+          type: boolean
+          required: false
+          in: query
+        - description: Should arange of qtrs of student attendance be included
+          name: rangeOfQtrs
+          type: boolean
+          required: false
+          in: query
+        - description: Should a single qtr of student attendance be included
+          name: singleQtr
+          type: boolean
+          required: false
+          in: query
+        - description: contains a file name of an attachment uploaded to Parchment
+          name: uploadAttachment
+          type: string
+          required: false
+          in: query
+        - description: Enum - Fall/Spring/Winter/Summer
+          name: singleTerm
+          type: string
+          required: false
+          in: query
+        - description: Single year to be included in verification
+          name: singleTermYear
+          type: string
+          required: false
+          in: query
+        - description: Should expected graduation date be included
+          name: verifyExpectedGraduationDate
+          required: false
+          type: boolean
+          in: query
+        - description: "Mailing label includes name, address, attenionline for UCSD printed documents"
+          name: mailingLabel
+          type: string
+          required: false
+          in: query
+      responses:
+        "200":
+          description: ""
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+  /transcript:
+    get:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      produces:
+        - application/pdf
+      parameters:
+        - description: "The Student's PID"
+          name: studentID
+          type: string
+          required: true
+          in: query
+        - default: "null"
+          description: A tracking identifier to embedd in the PDF.
+          name: documentId
+          type: string
+          required: true
+          in: query
+        - description: Enum - Electronic/Mail/HoldForPickup
+          name: deliveryMethod
+          required: true
+          type: string
+          in: query
+        - description: contains a file name of an attachment uploaded to Parchment
+          name: uploadAttachment
+          required: false
+          type: string
+          in: query
+        - description: Name of the product being reqested
+          name: documentName
+          required: true
+          type: string
+          in: query
+        - description: "Mailing label includes name, address, attenionline for UCSD printed documents"
+          name: mailingLabel
+          required: false
+          type: string
+          in: query
+      responses:
+        "200":
+          description: ""
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+x-wso2-security:
+  apim:
+    scopes: ""
+    authorizationUrl: ""
+    x-wso2-scopes: []
+    description: ""
+    name: ""
+    flow: ""
+    type: ""
+    in: ""
+    tokenUrl: ""
+swagger: "2.0"
+parameters:
+  studentID:
+    description: "The Student's PID"
+    name: studentID
+    type: string
+    required: true
+    in: query
+  academicLevel:
+    description: "The academic levels that records should be retrieved from.  Valid values are UN, GR, MD & PH.  Multiple levels may be provided as a comma seperated list (e.g. academicLevel=UN,GR)."
+    name: academicLevel
+    type: string
+    required: true
+    in: query
+  documentId:
+    default: "null"
+    description: A tracking identifier to embedd in the PDF.
+    name: documentId
+    type: string
+    required: true
+    in: query
+definitions:
+  ErrorMessage:
+    properties:
+      message:
+        type: string
+      errors:
+        items:
+          type: string
+        type: array
+      moreInformation:
+        type: string
+      status:
+        type: string
+      developerMessage:
+        type: string
+info:
+  title: AcademicRecords
+  description: Enhanced Electronic Transcript project.  Can generated Transcript and Enrollment Verification PDFs
+  termsOfService: ""
+  license:
+    name: ""
+    url: ""
+  contact:
+    name: ""
+  version: v1

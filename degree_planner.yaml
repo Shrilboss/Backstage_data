@@ -1,0 +1,1635 @@
+openapi: 3.0.1
+info:
+  title: DegreePlanner.Api
+  version: "1.0"
+paths:
+  /labels:
+    get:
+      tags:
+        - Labels
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DegreePlanner.Domain.Models.CourseLabel"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/plans/{planId}/courses/{courseId}/label":
+    get:
+      tags:
+        - Labels
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.CourseLabel"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    put:
+      tags:
+        - Labels
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.CourseLabel"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.CourseLabel"
+          "application/*+json":
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.CourseLabel"
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /majors:
+    get:
+      tags:
+        - MajorsMinors
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DegreePlanner.Domain.Models.Major"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/majors/{majorCode}":
+    get:
+      tags:
+        - MajorsMinors
+      parameters:
+        - name: majorCode
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Major"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /minors:
+    get:
+      tags:
+        - MajorsMinors
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DegreePlanner.Domain.Models.Minor"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/minors/{minorCode}":
+    get:
+      tags:
+        - MajorsMinors
+      parameters:
+        - name: minorCode
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Minor"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/plans/{planId}/notes":
+    get:
+      tags:
+        - Notes
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DegreePlanner.Domain.Models.Note"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    post:
+      tags:
+        - Notes
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Note"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Note"
+          "application/*+json":
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Note"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Note"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/plans/{planId}/notes/{noteId}":
+    get:
+      tags:
+        - Notes
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Note"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    delete:
+      tags:
+        - Notes
+      parameters:
+        - name: noteId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Note"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /plans:
+    get:
+      tags:
+        - Plans
+      parameters:
+        - name: studentPID
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    post:
+      tags:
+        - Plans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+          "application/*+json":
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/plans/{planId}":
+    get:
+      tags:
+        - Plans
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    put:
+      tags:
+        - Plans
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+          "application/*+json":
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    patch:
+      tags:
+        - Plans
+      parameters:
+        - name: planId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+          "application/*+json":
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.Plan"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/students/{studentPid}":
+    get:
+      tags:
+        - Students
+      parameters:
+        - name: studentPid
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.OfficialStudent"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /students:
+    get:
+      tags:
+        - Students
+      parameters:
+        - name: lastName
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: firstName
+          in: query
+          schema:
+            type: string
+            default: ""
+            nullable: true
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/students/{studentPid}/display_name":
+    get:
+      tags:
+        - Students
+      parameters:
+        - name: studentPid
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /students/display_names:
+    get:
+      tags:
+        - Students
+      parameters:
+        - name: lastName
+          in: query
+          schema:
+            type: string
+            nullable: true
+        - name: firstName
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/students/{studentPid}/majors":
+    get:
+      tags:
+        - Students
+      parameters:
+        - name: studentPid
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: termCode
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MajorMinor.Model.StudentMajorListRoot"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/students/{studentPid}/minors":
+    get:
+      tags:
+        - Students
+      parameters:
+        - name: studentPid
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: termCode
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MajorMinor.Model.StudentMinorListRoot"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/students/{studentPid}/class_list":
+    get:
+      tags:
+        - Students
+      parameters:
+        - name: studentPid
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: termCode
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: academicLevel
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /terms/current:
+    get:
+      tags:
+        - Terms
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.AcademicTerm"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /users:
+    get:
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    post:
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+          "application/*+json":
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/users/{userId}":
+    get:
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+    put:
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+          "application/*+json":
+            schema:
+              $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /users/me:
+    get:
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DegreePlanner.Domain.Models.User"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/users/{userId}/holds":
+    get:
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            nullable: true
+        - name: code
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DegreePlanner.Domain.Models.Hold"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+        "500":
+          description: Server Error
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  /users/getuserroles:
+    get:
+      tags:
+        - Users
+      parameters:
+        - name: employeeID
+          in: query
+          schema:
+            type: string
+            nullable: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EVCRoles.Model.UserList"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+  "/users/{employeeID}/permissions":
+    get:
+      tags:
+        - Users
+      parameters:
+        - name: employeeID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: categoryID
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EVCRoles.Model.UserList"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+components:
+  schemas:
+    DegreePlanner.Domain.Models.CourseLabel:
+      type: object
+      properties:
+        courseLabelId:
+          type: integer
+          format: int32
+        value:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Microsoft.AspNetCore.Mvc.ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties:
+        type: object
+        additionalProperties: false
+    DegreePlanner.Domain.Models.Major:
+      type: object
+      properties:
+        majorCode:
+          type: string
+          nullable: true
+        majorName:
+          type: string
+          nullable: true
+        departmentCode:
+          type: string
+          nullable: true
+        departmentName:
+          type: string
+          nullable: true
+        capped:
+          type: boolean
+          readOnly: true
+      additionalProperties: false
+    DegreePlanner.Domain.Models.Minor:
+      type: object
+      properties:
+        minorCode:
+          type: string
+          nullable: true
+        minorName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DegreePlanner.Domain.Models.Note:
+      type: object
+      properties:
+        noteId:
+          type: integer
+          format: int32
+        planId:
+          type: integer
+          format: int32
+        unitName:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        content:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+    DegreePlanner.Domain.Models.ApplicantType:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+    DegreePlanner.Domain.Models.Student:
+      type: object
+      properties:
+        studentPID:
+          type: string
+          nullable: true
+        college:
+          type: string
+          nullable: true
+        major:
+          type: string
+          nullable: true
+        major2:
+          type: string
+          nullable: true
+        minors:
+          type: array
+          items:
+            type: string
+          nullable: true
+        transferUnits:
+          maximum: 1000
+          minimum: 0
+          type: number
+          format: float
+        applicantType:
+          $ref: "#/components/schemas/DegreePlanner.Domain.Models.ApplicantType"
+        startingYear:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+    DegreePlanner.Domain.Models.Course:
+      type: object
+      properties:
+        courseId:
+          type: integer
+          format: int32
+        year:
+          type: integer
+          format: int32
+        qtr:
+          maxLength: 6
+          type: string
+          nullable: true
+        name:
+          maxLength: 20
+          type: string
+          nullable: true
+        courseLabel:
+          $ref: "#/components/schemas/DegreePlanner.Domain.Models.CourseLabel"
+        units:
+          maximum: 100
+          minimum: 0
+          type: number
+          format: float
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+    DegreePlanner.Domain.Models.PlanState:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+    DegreePlanner.Domain.Models.Plan:
+      type: object
+      properties:
+        planId:
+          type: integer
+          format: int32
+        student:
+          $ref: "#/components/schemas/DegreePlanner.Domain.Models.Student"
+        title:
+          maxLength: 50
+          type: string
+          nullable: true
+        courses:
+          type: array
+          items:
+            $ref: "#/components/schemas/DegreePlanner.Domain.Models.Course"
+          nullable: true
+        state:
+          $ref: "#/components/schemas/DegreePlanner.Domain.Models.PlanState"
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+    DegreePlanner.Domain.Models.OfficialStudent:
+      type: object
+      properties:
+        studentPid:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        middleName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        nameSuffix:
+          type: string
+          nullable: true
+        collegeCode:
+          type: string
+          nullable: true
+        college:
+          type: string
+          nullable: true
+        applicationTermCode:
+          type: string
+          nullable: true
+        applicationYear:
+          type: string
+          nullable: true
+        applicantTypeCode:
+          type: string
+          nullable: true
+        applicantType:
+          type: string
+          nullable: true
+        ucsdEmail:
+          type: string
+          nullable: true
+        photoUrl:
+          type: string
+          nullable: true
+        departmentCode1:
+          type: string
+          nullable: true
+        department1:
+          type: string
+          nullable: true
+        majorCode1:
+          type: string
+          nullable: true
+        major1:
+          type: string
+          nullable: true
+        degreeTypeCode1:
+          type: string
+          nullable: true
+        department2:
+          type: string
+          nullable: true
+        departmentCode2:
+          type: string
+          nullable: true
+        majorCode2:
+          type: string
+          nullable: true
+        major2:
+          type: string
+          nullable: true
+        degreeTypeCode2:
+          type: string
+          nullable: true
+        transferUnits:
+          maximum: 1000
+          minimum: 0
+          type: number
+          format: float
+      additionalProperties: false
+    MajorMinor.Model.Metadata:
+      type: object
+      additionalProperties: false
+    MajorMinor.Model.StudentMajorData:
+      type: object
+      properties:
+        term_code:
+          type: string
+          nullable: true
+        department_code:
+          type: string
+          nullable: true
+        department_name:
+          type: string
+          nullable: true
+        major_code:
+          type: string
+          nullable: true
+        major_description:
+          type: string
+          nullable: true
+        major_short_description:
+          type: string
+          nullable: true
+        degree_type:
+          type: string
+          nullable: true
+        college_code:
+          type: string
+          nullable: true
+        college_description:
+          type: string
+          nullable: true
+        academic_level:
+          type: string
+          nullable: true
+      additionalProperties: false
+    MajorMinor.Model.StudentMajorListRoot:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/MajorMinor.Model.Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/MajorMinor.Model.StudentMajorData"
+          nullable: true
+      additionalProperties: false
+    MajorMinor.Model.StudentMinorData:
+      type: object
+      properties:
+        term_code:
+          type: string
+          nullable: true
+        minor_code:
+          type: string
+          nullable: true
+        minor_description:
+          type: string
+          nullable: true
+        department_code:
+          type: string
+          nullable: true
+        department_name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    MajorMinor.Model.StudentMinorListRoot:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/MajorMinor.Model.Metadata"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/MajorMinor.Model.StudentMinorData"
+          nullable: true
+      additionalProperties: false
+    DegreePlanner.Domain.Models.AcademicTerm:
+      type: object
+      properties:
+        termSeq:
+          type: integer
+          format: int32
+        term:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        startDate:
+          type: object
+          additionalProperties: false
+          nullable: true
+        endDate:
+          type: object
+          additionalProperties: false
+          nullable: true
+      additionalProperties: false
+    DegreePlanner.Domain.Models.User:
+      type: object
+      properties:
+        ucPathEmployeeId:
+          type: string
+          nullable: true
+        studentPID:
+          type: string
+          nullable: true
+        primaryPlanId:
+          type: integer
+          format: int32
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+      additionalProperties: false
+    DegreePlanner.Domain.Models.Hold:
+      type: object
+      properties:
+        pid:
+          type: string
+          nullable: true
+        code:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    EVCRoles.Model.Link:
+      type: object
+      properties:
+        href:
+          type: string
+          nullable: true
+        rel:
+          type: string
+          nullable: true
+      additionalProperties: false
+    EVCRoles.Model.UserRoleAssignment:
+      type: object
+      properties:
+        roleID:
+          type: integer
+          format: int32
+          nullable: true
+        roleName:
+          type: string
+          nullable: true
+        unitID:
+          type: integer
+          format: int32
+          nullable: true
+        unitName:
+          type: string
+          nullable: true
+        effectiveDate:
+          type: string
+          nullable: true
+        endDate:
+          type: string
+          nullable: true
+        assignedToUnit:
+          type: integer
+          format: int32
+          nullable: true
+      additionalProperties: false
+    EVCRoles.Model.UserPermission:
+      type: object
+      properties:
+        userID:
+          type: integer
+          format: int32
+          nullable: true
+        permissionID:
+          type: integer
+          format: int32
+          nullable: true
+        permissionName:
+          type: string
+          nullable: true
+        categoryID:
+          type: integer
+          format: int32
+          nullable: true
+        categoryName:
+          type: string
+          nullable: true
+        unitID:
+          type: integer
+          format: int32
+          nullable: true
+        unitName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    EVCRoles.Model.UserData:
+      type: object
+      properties:
+        userID:
+          type: integer
+          format: int32
+          nullable: true
+        fullName:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        singleSignOnUserID:
+          type: string
+          nullable: true
+        employeeID:
+          type: string
+          nullable: true
+        ucPathEmployeeID:
+          type: integer
+          format: int32
+          nullable: true
+        ppsEmployeeID:
+          type: string
+          nullable: true
+        pid:
+          type: string
+          nullable: true
+        emailAddress:
+          type: string
+          nullable: true
+        titleCode:
+          type: string
+          nullable: true
+        titleName:
+          type: string
+          nullable: true
+        departmentCode:
+          type: string
+          nullable: true
+        departmentName:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        mailCode:
+          type: string
+          nullable: true
+        interfolioID:
+          type: integer
+          format: int32
+          nullable: true
+        interfolioPID:
+          type: integer
+          format: int32
+          nullable: true
+        faculty180PID:
+          type: integer
+          format: int32
+          nullable: true
+        employeePhoto:
+          type: string
+          nullable: true
+        isUserActive:
+          type: boolean
+          nullable: true
+        userDetails:
+          type: string
+          nullable: true
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/EVCRoles.Model.Link"
+          nullable: true
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/EVCRoles.Model.UserRoleAssignment"
+          nullable: true
+        permissions:
+          type: array
+          items:
+            $ref: "#/components/schemas/EVCRoles.Model.UserPermission"
+          nullable: true
+      additionalProperties: false
+    EVCRoles.Model.Metadata:
+      type: object
+      additionalProperties: false
+    EVCRoles.Model.UserList:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/EVCRoles.Model.UserData"
+        metadata:
+          $ref: "#/components/schemas/EVCRoles.Model.Metadata"
+      additionalProperties: false

@@ -1,0 +1,246 @@
+basePath: /academic_history/v1
+host: "api-qa.ucsd.edu:8243"
+paths:
+  "/students/{pid}/waitlisted_classes*":
+    get:
+      summary: Retrieves a list of waitlisted classes for student
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      description: "Retrieves a list of waitlisted classes for a student for a term.\n"
+      parameters:
+        - description: The student id
+          name: pid
+          required: true
+          type: string
+          in: path
+        - description: Term code (eg. FA15)
+          name: term_code
+          required: true
+          type: string
+          in: query
+        - description: "Academic level (eg. UN, GR)"
+          name: academic_level
+          required: true
+          type: string
+          in: query
+      responses:
+        "200":
+          schema:
+            $ref: "#/definitions/WaitlistDataList"
+          description: An array of sections
+        "400":
+          description: ""
+          $ref: "#/responses/400Response"
+        "403":
+          description: ""
+          $ref: "#/responses/403Response"
+        "500":
+          description: ""
+          $ref: "#/responses/500Response"
+  "/students/{pid}/class_list*":
+    get:
+      summary: "Retrieves a student's class list for term"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      description: "Retrieves a student's class list for a term.  For current and\nfuture and current terms will just display the class schedule of \nenrolled classes.  For completed terms will additionally retrieve grade\ndata.\n"
+      parameters:
+        - description: The student id
+          name: pid
+          required: true
+          type: string
+          in: path
+        - description: Term code (eg. FA15)
+          name: term_code
+          required: true
+          type: string
+          in: query
+        - description: "Academic level (eg. UN, GR)"
+          name: academic_level
+          required: true
+          type: string
+          in: query
+      responses:
+        "200":
+          schema:
+            $ref: "#/definitions/ClassDataList"
+          description: An array of sections
+        "400":
+          description: ""
+          $ref: "#/responses/400Response"
+        "403":
+          description: ""
+          $ref: "#/responses/403Response"
+        "500":
+          description: ""
+          $ref: "#/responses/500Response"
+  "/students/{pid}/term_list":
+    get:
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: ""
+      summary: "Retrieves a student's academic level for each term "
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+schemes:
+  - https
+swagger: "2.0"
+definitions:
+  ClassDataList:
+    type: object
+    properties:
+      metadata:
+        $ref: "#/definitions/Metadata"
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/ClassData"
+  ClassData:
+    type: object
+    properties:
+      term_code:
+        type: string
+        example: SP18
+      subject_code:
+        type: string
+        example: CSE
+      course_code:
+        type: string
+        example: 100A
+      units:
+        type: integer
+        format: int32
+      course_level:
+        type: string
+        example: UD
+      grade_option:
+        type: string
+        example: L
+      grade:
+        type: string
+        example: A
+      course_title:
+        type: string
+        example: Advanced Data Structures
+      enrollment_status:
+        type: string
+        example: EN
+      enrollment_status_date:
+        type: string
+        example: "2018-06-12T00:00:00.000Z"
+      repeat_code:
+        type: string
+        example: "N"
+      section_data:
+        type: array
+        items:
+          $ref: "#/definitions/Section"
+  Section:
+    properties:
+      time:
+        type: string
+        example: "12:00 - 12:50"
+      building:
+        type: string
+        example: CENTR
+      instructor_name:
+        type: string
+        example: Charles Xavier
+      special_mtg_code:
+        type: string
+        example: FI
+      days:
+        type: string
+        example: MO
+      section:
+        type: string
+        example: "123456"
+      section_code:
+        type: string
+        example: A00
+      meeting_type:
+        type: string
+        example: Lecture
+      room:
+        type: string
+        example: 100B
+    type: object
+  ErrorMessage:
+    properties:
+      message:
+        type: string
+    type: object
+  Metadata:
+    properties: {}
+    type: object
+  WaitlistDataList:
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/Waitlist"
+      metadata:
+        $ref: "#/definitions/Metadata"
+    type: object
+  Waitlist:
+    properties:
+      course_code:
+        type: string
+      term_sequence:
+        type: string
+      department:
+        type: string
+      subject:
+        type: string
+      student_id:
+        type: string
+      term_id:
+        type: string
+      college:
+        type: string
+      list_position:
+        type: string
+      section_id:
+        type: string
+      units:
+        format: double
+        type: number
+      section_code:
+        type: string
+    type: object
+  Error:
+    properties:
+      message:
+        type: string
+      errors:
+        items:
+          $ref: "#/definitions/ErrorMessage"
+        type: array
+      developer_message:
+        type: string
+      more_information:
+        type: string
+      code:
+        type: string
+    type: object
+responses:
+  500Response:
+    schema:
+      $ref: "#/definitions/Error"
+    description: Unexpected Error
+  403Response:
+    schema:
+      $ref: "#/definitions/Error"
+    description: Unauthorized
+  400Response:
+    schema:
+      $ref: "#/definitions/Error"
+    description: Invalid parameters
+info:
+  title: AcademicHistory
+  description: Retrieves student academic records by term.
+  version: v1

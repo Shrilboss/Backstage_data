@@ -1,0 +1,13 @@
+swagger: "2.0"
+paths:
+  /GetUserGroups:
+    get:
+      responses:
+        "200":
+          description: ""
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+info:
+  title: AS-Data
+  version: v1.0.0
+  description: The AS Main System data layer API. You can retrieve AS student data from this API.

@@ -1,0 +1,598 @@
+swagger: "2.0"
+info:
+  version: v1
+  title: EmployeeData
+  description: Retrieves Employee data by emp id.
+schemes:
+  - https
+  - http
+host: "api-qa.ucsd.edu:8243"
+basePath: /employee_data/v1
+paths:
+  "/employees/namerequest/{namePart}":
+    get:
+      summary: "Retrieves an employee's data by name, or part of a name"
+      description: "Retrieves an employee's data by emp id, not to include salary data.  Retrieves employee, affiliate, appointment, supervisor, and supervisee data.\n"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      parameters:
+        - name: namePart
+          description: "Employee name, or a portion thereof"
+          required: true
+          type: string
+          in: path
+      responses:
+        "200":
+          description: "One employee's data"
+          schema:
+            $ref: "#/definitions/RootResponse"
+        "400":
+          $ref: "#/responses/400Response"
+        "403":
+          $ref: "#/responses/403Response"
+        "500":
+          $ref: "#/responses/500Response"
+  "/employees/emailrequest/{email}":
+    get:
+      summary: "Retrieves an employee's data by exact email address"
+      description: "Retrieves an employee's data by emp id, not to include salary data.  Retrieves employee, affiliate, appointment, supervisor, and supervisee data.\n"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      parameters:
+        - $ref: "#/parameters/email"
+      responses:
+        "200":
+          description: "One employee's data"
+          schema:
+            $ref: "#/definitions/RootResponse"
+        "400":
+          $ref: "#/responses/400Response"
+        "403":
+          $ref: "#/responses/403Response"
+        "500":
+          $ref: "#/responses/500Response"
+  "/employees/{employee_id}":
+    get:
+      summary: "Retrieves an employee's data by emp id"
+      description: "Retrieves an employee's data by emp id, not to include salary data.  Retrieves employee, affiliate, appointment, supervisor, and supervisee data.\n"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      parameters:
+        - $ref: "#/parameters/employee_id"
+      responses:
+        "200":
+          description: "One employee's data"
+          schema:
+            $ref: "#/definitions/RootResponse"
+        "400":
+          $ref: "#/responses/400Response"
+        "403":
+          $ref: "#/responses/403Response"
+        "500":
+          $ref: "#/responses/500Response"
+  /employees:
+    get:
+      summary: "Retrieves employees' data by dept or by supervisor id"
+      description: "Retrieves all employee data for employees in the passed-in parameters.  Either department id & type (Home dept, Alternate dept, or the dept from the Appointment records.), or a  supervisor's emp ID.\n"
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      parameters:
+        - $ref: "#/parameters/sup_id"
+        - $ref: "#/parameters/dept_id"
+        - $ref: "#/parameters/dept_type"
+      responses:
+        "200":
+          description: "An array of employees' data"
+          schema:
+            $ref: "#/definitions/RootResponse"
+        "400":
+          $ref: "#/responses/400Response"
+        "403":
+          $ref: "#/responses/403Response"
+        "500":
+          $ref: "#/responses/500Response"
+definitions:
+  RootResponse:
+    type: object
+    properties:
+      metadata:
+        $ref: "#/definitions/Metadata"
+      data:
+        $ref: "#/definitions/EmployeeData"
+  Metadata:
+    type: object
+    properties: {}
+  EmployeeData:
+    type: object
+    properties:
+      actionDate:
+        type: string
+        example: "2017-06-23"
+      aid:
+        type: string
+        example: 123f123456789e9301159273c1234567
+      allDepartments:
+        type: string
+        example: "000444|000425"
+      altDepartment2Code:
+        type: string
+        example: "000444"
+      altDepartment3Code:
+        type: string
+        example: "000425"
+      alternateDepartmentCode:
+        type: string
+        example: "000425"
+      appointments:
+        type: array
+        items:
+          $ref: "#/definitions/Appointments"
+      assignedBenefitEligCode:
+        type: string
+        example: "1"
+      benefitEligEffDate:
+        type: string
+        example: "2007-10-29"
+      changeCode:
+        type: string
+        example: ""
+      citizenshipCode:
+        type: string
+        example: C
+      collegeCode:
+        type: string
+        example: ""
+      countryResidencyCode:
+        type: string
+        example: ""
+      currentStudentFlag:
+        type: string
+        example: ""
+      deductPayScheduleCode:
+        type: string
+        example: MO
+      departmentName:
+        type: string
+        example: INFORMATION TECHNOLOGY SVCS
+      derivedBenefitEligCode:
+        type: string
+        example: "1"
+      embId:
+        type: string
+        example: "123456"
+      empRelationUnitCode:
+        type: string
+        example: "99"
+      employeeId:
+        type: string
+        example: "000123456"
+      employeeName:
+        type: string
+        example: "PROGRAMMER, GOOD GREAT"
+      employeeNumber:
+        type: string
+        example: "123456"
+      employeeRelationCode:
+        type: string
+        example: E
+      employmentStatusCode:
+        type: string
+        example: A
+      fax:
+        type: string
+        example: "8585349876"
+      ficaEligibilityCode:
+        type: string
+        example: E
+      firstName:
+        type: string
+        example: GOOD
+      hireDate:
+        type: string
+        example: "2007-10-29"
+      homeDepartmentCode:
+        type: string
+        example: "000444"
+      i9Date:
+        type: string
+        example: "2007-10-29"
+      identityvalidated:
+        type: string
+        example: "Y"
+      ifisInternalId:
+        type: string
+        example: "352876"
+      lastName:
+        type: string
+        example: PROGRAMMER
+      loaBeginDate:
+        type: string
+        example: "1900-01-01"
+      loaReturnDate:
+        type: string
+        example: "1900-01-01"
+      loaStatusCode:
+        type: string
+        example: ""
+      mailcode:
+        type: string
+        example: 0969
+      middleName:
+        type: string
+        example: GREAT
+      nameSuffix:
+        type: string
+        example: ""
+      networkuserid:
+        type: string
+        example: gpgmr
+      nextSalaryReviewCode:
+        type: string
+        example: "2"
+      nextSalaryReviewDate:
+        type: string
+        example: "2018-07-01"
+      oathSignatureDate:
+        type: string
+        example: "2007-10-29"
+      officialEmail:
+        type: string
+        example: "gpgmr@ucsd.edu"
+      officialEmailValid:
+        type: string
+        example: "Y"
+      originalHireDate:
+        type: string
+        example: "2007-10-29"
+      pafGenNumber:
+        type: string
+        example: 0029
+      payDistributionCode:
+        type: string
+        example: ""
+      personId:
+        type: string
+        example: "123456"
+      phone:
+        type: string
+        example: "8581234567"
+      photoLocation:
+        type: string
+        example: http//hollerith.ucsd.edu/emp-image/bbts/photos/000123456.JPG
+      pid:
+        type: string
+        example: "null"
+      priorName:
+        type: string
+        example: "OLDNAME, GOOD GREAT"
+      probationEndDate:
+        type: string
+        example: "1900-01-01"
+      racfid:
+        type: string
+        example: DEVABC
+      recordCode:
+        type: string
+        example: "0"
+      refreshDate:
+        type: string
+        example: "2017-07-19"
+      refreshType:
+        type: string
+        example: "1"
+      retirementEligCode:
+        type: string
+        example: U
+      roomNumber:
+        type: string
+        example: C-121
+      securedStudentFlag:
+        type: string
+        example: ""
+      separationDate:
+        type: string
+        example: "1900-01-01"
+      sponsoredHomeDept:
+        type: string
+        example: "null"
+      studentStatusCode:
+        type: string
+        example: "1"
+      supervisees:
+        type: array
+        items:
+          $ref: "#/definitions/Supervisors"
+      supervisors:
+        type: array
+        items:
+          $ref: "#/definitions/Supervisees"
+      timekeeperCode:
+        type: string
+        example: "00044405"
+      tmsTitle:
+        type: string
+        example: Java Dev/Analyst
+      ucnetid:
+        type: string
+        example: "2345678"
+      vanityEmailAlias:
+        type: string
+        example: "emailOne@ucsd.edu"
+      vanityEmailEmail:
+        type: string
+        example: "gprogrammer@ucsd.edu"
+      vanityEmailLong:
+        type: string
+        example: "gprogrammer@ucsd.edu"
+      vanityEmailPers:
+        type: string
+        example: ""
+      visaEndDate:
+        type: string
+        example: "1900-01-01"
+      visaTypeCode:
+        type: string
+        example: ""
+  Appointments:
+    type: object
+    properties:
+      apptNumber:
+        type: string
+        example: "10"
+      apptTypeCode:
+        type: string
+        example: "2"
+      beginDate:
+        type: string
+        example: "2015-06-01"
+      deptCode:
+        type: string
+        example: "000444"
+      durationCode:
+        type: string
+        example: I
+      embId:
+        type: string
+        example: "201707191000123456"
+      endDate:
+        type: string
+        example: "2079-01-01"
+      gradeCode:
+        type: string
+        example: "22"
+      outlineCode:
+        type: string
+        example: F15
+      percent:
+        type: string
+        example: "1"
+      persProgramCode:
+        type: string
+        example: "1"
+      rankCode:
+        type: string
+        example: ""
+      recordCode:
+        type: string
+        example: "0"
+      refreshDate:
+        type: string
+        example: "2017-07-19"
+      refreshType:
+        type: string
+        example: "1"
+      representCode:
+        type: string
+        example: C
+      timeCode:
+        type: string
+        example: F
+      titleCode:
+        type: string
+        example: "7300"
+      titleName:
+        type: string
+        example: APPLICATIONS PROGR 9
+      titleUnitCode:
+        type: string
+        example: "99"
+  Supervisors:
+    type: object
+    properties:
+      active:
+        type: string
+        example: "1"
+      affiliateid:
+        type: string
+        example: 123f123456df952d0100df9afaae123x
+      appointmentNumber:
+        type: string
+        example: "10"
+      beginDate:
+        type: string
+        example: "2015-06-01"
+      departmentCode:
+        type: string
+        example: "000444"
+      employeeId:
+        type: string
+        example: "000123456"
+      employeeName:
+        type: string
+        example: "PROGRAMMER, GOOD GREAT"
+      endDate:
+        type: string
+        example: "2079-01-01"
+      id:
+        type: string
+        example: 123x45xx67cbfacf0152236ba45e05x1
+      personId:
+        type: string
+        example: "98765"
+      roleAssignDate:
+        type: string
+        example: "1452293203038"
+      roleEnv:
+        type: string
+        example: PROD
+      roleName:
+        type: string
+        example: ER_WORK_DIRECTOR
+      roleRemoveDate:
+        type: string
+        example: "null"
+      supAffiliateid:
+        type: string
+        example: 123f123456df952d0100df9afaae123x
+      supEmployeeId:
+        type: string
+        example: 000098765
+      supName:
+        type: string
+        example: "BOSS1, JACK BOSSMAN"
+      supPersonId:
+        type: string
+        example: "98765"
+      titleCode:
+        type: string
+        example: "0650"
+  Supervisees:
+    type: object
+    properties:
+      active:
+        type: string
+        example: "1"
+      affiliateid:
+        type: string
+        example: 123f123456df952d0100df9afaae123x
+      appointmentNumber:
+        type: string
+        example: "10"
+      beginDate:
+        type: string
+        example: "2015-06-01"
+      departmentCode:
+        type: string
+        example: "000444"
+      employeeId:
+        type: string
+        example: "000123456"
+      employeeName:
+        type: string
+        example: "PROGRAMMER, GOOD GREAT"
+      endDate:
+        type: string
+        example: "2079-01-01"
+      id:
+        type: string
+        example: 123x45xx67cbfacf0152236ba45e05x1
+      personId:
+        type: string
+        example: "98765"
+      roleAssignDate:
+        type: string
+        example: "1452293203038"
+      roleEnv:
+        type: string
+        example: PROD
+      roleName:
+        type: string
+        example: ER_WORK_DIRECTOR
+      roleRemoveDate:
+        type: string
+        example: "null"
+      supAffiliateid:
+        type: string
+        example: 123f123456df952d0100df9afaae123x
+      supEmployeeId:
+        type: string
+        example: 000098765
+      supName:
+        type: string
+        example: "BOSS1, JACK BOSSMAN"
+      supPersonId:
+        type: string
+        example: "98765"
+      titleCode:
+        type: string
+        example: "0650"
+  Error:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Example message for user.
+      developer_message:
+        type: string
+        example: Example message for developer.
+      more_information:
+        type: string
+        example: "http://example.com/more-error-information"
+      code:
+        type: string
+      errors:
+        type: array
+        items:
+          $ref: "#/definitions/ErrorMessage"
+  ErrorMessage:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Individual message.
+parameters:
+  namePart:
+    name: namePart
+    description: "Employee name, or a portion thereof"
+    required: true
+    type: string
+    in: path
+  email:
+    name: email
+    description: The exact email address
+    required: true
+    type: string
+    in: path
+  employee_id:
+    name: employee_id
+    description: The employee id. No need to pad with zeros.
+    required: true
+    type: string
+    in: path
+  dept_id:
+    name: dept_id
+    description: The dept id. No need to pad with zeros.
+    required: false
+    type: string
+    in: query
+  dept_type:
+    name: dept_type
+    description: The dept type (home / alt / appt).
+    required: false
+    type: string
+    in: query
+  sup_id:
+    name: sup_id
+    description: The employee ID of the supervisor
+    required: false
+    type: string
+    in: query
+responses:
+  400Response:
+    description: Invalid parameters
+    schema:
+      $ref: "#/definitions/Error"
+  403Response:
+    description: Unauthorized
+    schema:
+      $ref: "#/definitions/Error"
+  500Response:
+    description: Unexpected Error
+    schema:
+      $ref: "#/definitions/Error"
+securityDefinitions:
+  default:
+    type: oauth2
+    authorizationUrl: "https://api-qa.ucsd.edu:8243/authorize"
+    flow: implicit
+    scopes: {}

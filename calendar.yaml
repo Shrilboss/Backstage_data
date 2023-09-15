@@ -1,0 +1,276 @@
+paths:
+  /events:
+    post:
+      x-auth-type: "Application & Application User"
+      x-mediation-script: "/* mc.setProperty('CONTENT_TYPE', 'application/json');\n    \nmc.setPayloadJSON('{ \"data\" : \"sample JSON\"}');\nUncomment the above comment block to send a sample response.*/\n\n"
+      x-throttling-tier: Unlimited
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - schema:
+            $ref: "#/definitions/Event"
+            properties:
+              payload:
+                type: string
+          description: "The EventDay specifies the recurrance format and needs to follow RRULE fomat. e.g. RRULE:FREQ=WEEKLY;Days=M,W,F;UNTIL=20110701T170000Z For more information checkout http://www.grokkingandroid.com/recurrence-rule-and-duration-formats/"
+          name: body
+          required: true
+          in: body
+        - name: api_key
+          required: false
+          type: string
+          in: header
+        - name: Act-MessageID
+          required: false
+          type: string
+          in: header
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/Event"
+            type: array
+          description: successful operation
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+      operationId: createEvent
+    get:
+      x-auth-type: "Application & Application User"
+      x-mediation-script: " mc.setProperty('CONTENT_TYPE', 'application/json');\n    \nmc.setPayloadJSON('{ \"calendarType\" : \"personal\", \"eventName\" : \"Go to gym\", \"eventLocation\" : \"REMAC\", \"eventDays\" : \"M,W,F\", \"timeZone\" : \"PDT\"}');\n/*Uncomment the above comment block to send a sample response.*/\n\n"
+      x-throttling-tier: Unlimited
+      parameters:
+        - description: 4 digit term code
+          name: termCode
+          required: false
+          type: string
+          in: query
+        - name: recurrence
+          required: true
+          type: boolean
+          in: query
+        - name: startTime
+          required: false
+          type: dateTime
+          in: query
+        - name: endTime
+          required: false
+          type: datetime
+          in: query
+        - description: Student ID or PID
+          name: studentID
+          type: string
+          required: true
+          in: query
+        - description: "values can be personal, classes, finals, waitlist"
+          name: eventType
+          required: true
+          type: string
+          in: query
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/Event"
+            type: array
+          description: successful operation
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+  "/events/{eventId}":
+    put:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - schema:
+            $ref: "#/definitions/Event"
+            properties:
+              payload:
+                type: string
+          description: update an event
+          name: body
+          required: true
+          in: body
+        - name: eventId
+          required: true
+          type: string
+          in: body
+        - name: api_key
+          required: false
+          type: string
+          in: header
+        - name: Act-MessageID
+          required: false
+          type: string
+          in: header
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/Event"
+            type: array
+          description: successful operation
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+    get:
+      x-auth-type: "Application & Application User"
+      x-mediation-script: " mc.setProperty('CONTENT_TYPE', 'application/json');\n    \nmc.setPayloadJSON('{ \"calendarType\" : \"personal\", \"eventName\" : \"Go to gym\", \"eventLocation\" : \"REMAC\", \"eventDays\" : \"M,W,F\", \"timeZone\" : \"PDT\"}');\n/*Uncomment the above comment block to send a sample response.*/\n\n"
+      x-throttling-tier: Unlimited
+      parameters:
+        - description: "Values can be personal,classes,finals,waitlist"
+          name: calendar
+          required: true
+          type: string
+          in: query
+        - description: 4 digit term code
+          name: termCode
+          required: false
+          type: string
+          in: query
+        - name: recurrence
+          required: true
+          type: boolean
+          in: query
+        - name: startTime
+          required: false
+          type: dateTime
+          in: query
+        - name: endTime
+          required: false
+          type: datetime
+          in: query
+        - name: api_key
+          required: true
+          type: string
+          in: header
+        - name: Act-MessageID
+          required: false
+          type: string
+          in: header
+      responses:
+        "200":
+          schema:
+            $ref: "#/definitions/Event"
+          description: successful operation
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+    delete:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      parameters:
+        - description: Event id to delete
+          name: eventId
+          format: int64
+          required: true
+          type: integer
+          in: path
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/Event"
+            type: array
+          description: successful operation
+        "401":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: Invalid api key
+        "403":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: API key is missing
+        "500":
+          schema:
+            $ref: "#/definitions/ErrorMessage"
+          description: "Something went wrong, please try again"
+    head:
+      x-auth-type: "Application & Application User"
+      x-throttling-tier: Unlimited
+      responses:
+        "200":
+          description: ""
+swagger: "2.0"
+definitions:
+  ErrorMessage:
+    properties:
+      message:
+        description: Message to be displayed
+        type: string
+      moreInformation:
+        description: Provide URL to get more information to resolve this error
+        type: string
+      status:
+        description: Code specifying error code
+        type: string
+      developerMessage:
+        description: Detailed message for developers to debug this error
+        type: string
+    type: object
+  Event:
+    properties:
+      eventLocation:
+        type: string
+      timezone:
+        type: string
+      eventDescription:
+        type: string
+      eventId:
+        type: string
+      eventStart:
+        format: date-time
+        type: string
+      eventName:
+        type: string
+      eventDays:
+        type: string
+      eventType:
+        type: string
+      eventEnd:
+        format: date-time
+        type: string
+    type: object
+info:
+  title: Calendar
+  version: v1
